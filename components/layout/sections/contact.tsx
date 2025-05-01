@@ -99,7 +99,7 @@ export const ContactSection = () => {
 
               <AnimatedSection delay={0.4}>
                 <p className="text-muted-foreground lg:w-5/6">
-                  Have questions or want to learn more about our educational games? We're here to help! 
+                  Have questions or want to learn more about our educational games? We&apos;re here to help! 
                   Reach out to our team for information about our products, partnership opportunities, 
                   or technical support.
                 </p>
