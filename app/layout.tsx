@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/layout/navbar";
-import { ThemeProvider } from "@/components/layout/theme-provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "KridumAi - Game-Based Learning Platform",
-  description: "Revolutionizing education through game-based learning and AI",
+  title: "KridumAI - Game-Based Learning Platform",
+  description: "Transform education through interactive gaming experiences powered by AI.",
 };
 
 export default function RootLayout({
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background antialiased relative theme-transition", inter.className)}>
         {/* Futuristic background elements */}
         <div className="fixed inset-0 z-0">

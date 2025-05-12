@@ -8,7 +8,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { LineDrop } from "@/components/animations/line-drop";
+import { Icons } from "@/components/icons";
 
 const FeatureCard = ({ icon: Icon, title, delay }: { icon: any, title: string, delay: number }) => (
   <motion.div
@@ -33,30 +33,10 @@ export const HeroSection = () => {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   
-  // Line positions for the dropping animation
-  const linePositions = Array.from({ length: 30 }, (_, index) => ({
-    left: `${(index + 1) * 3.33}%`,
-    delay: index * 0.05,
-    height: Math.floor(Math.random() * (700 - 400) + 400),
-  }));
-  
   return (
     <section className="relative overflow-hidden min-h-screen bg-background" ref={containerRef}>
       {/* Professional Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_40%,transparent_100%)] opacity-[0.1]" />
-      
-      {/* Line Dropping Animation */}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        {linePositions.map((pos, index) => (
-          <LineDrop
-            key={index}
-            delay={pos.delay}
-            height={pos.height}
-            className="absolute top-0"
-            style={{ left: pos.left }}
-          />
-        ))}
-      </div>
 
       {/* Background Gradient Effects */}
       <motion.div 
@@ -70,6 +50,7 @@ export const HeroSection = () => {
         style={{ opacity: backgroundOpacity, y }} 
         className="absolute top-0 -left-4 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse z-10" 
       />
+      
       <motion.div 
         initial={{ opacity: 0.4 }}
         style={{ opacity: backgroundOpacity, y }} 
@@ -83,7 +64,7 @@ export const HeroSection = () => {
             <AnimatedSection delay={0.2}>
               <div className="flex flex-wrap gap-3">
                 <FeatureCard icon={Brain} title="AI-Powered Learning" delay={0.2} />
-                <FeatureCard icon={GamepadIcon} title="Game-Based Education" delay={0.4} />
+                <FeatureCard icon={Icons.kridumLogo} title="Game-Based Education" delay={0.4} />
                 <FeatureCard icon={Bot} title="Adaptive Teaching" delay={0.6} />
               </div>
             </AnimatedSection>
@@ -91,9 +72,9 @@ export const HeroSection = () => {
             <AnimatedSection delay={0.3}>
               <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
                 Transform Learning with{" "}
-                <span className="text-foreground dark:text-white">
-                  Kridum<span className="text-primary dark:text-neutral-400">AI</span>
-                </span>
+                <div className="inline-block mt-6">
+                  <Icons.kridumLogo size="3xl" className="text-foreground dark:text-white" />
+                </div>
               </h1>
             </AnimatedSection>
 
@@ -104,33 +85,24 @@ export const HeroSection = () => {
             </AnimatedSection>
 
             <AnimatedSection delay={0.5}>
-              <div className="flex flex-col sm:flex-row gap-3 mt-8">
-                <Button 
-                  size="default"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 group px-6 font-semibold"
-                >
-                  <Link href="https://www.kridumai.com/" target="_blank" className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild size="lg" className="group">
+                  <Link href="#pricing">
                     Get Started
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </Button>
-                
-                <Button
-                  variant="secondary"
-                  size="default"
-                  className="border border-muted hover:bg-accent transition-all duration-300 px-6"
-                >
-                  <Link href="https://www.KridumAI.com/" target="_blank" className="flex items-center gap-2">
-                    Watch Demo
-                    <Sparkles className="w-4 h-4" />
+                <Button asChild variant="outline" size="lg">
+                  <Link href="#features">
+                    Learn More
                   </Link>
                 </Button>
               </div>
             </AnimatedSection>
           </div>
 
-          {/* Right Column - Interactive Image */}
-          <AnimatedSection delay={0.6}>
+          {/* Right Column - Image */}
+          <AnimatedSection delay={0.6} className="lg:block">
             <div className="relative group perspective-1000">
               <motion.div
                 initial={{ rotateX: 0, rotateY: 0 }}
