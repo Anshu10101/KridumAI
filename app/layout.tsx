@@ -19,9 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("min-h-screen bg-background antialiased relative theme-transition", inter.className)}>
+      <body className={cn("min-h-screen bg-background antialiased relative theme-transition overflow-x-hidden w-full", inter.className)}>
         {/* Futuristic background elements */}
-        <div className="fixed inset-0 z-0">
+        <div className="fixed inset-0 z-0 overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 dark:from-primary/10 dark:via-secondary/10 dark:to-accent/10" />
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/5 dark:bg-secondary/10 rounded-full blur-3xl animate-pulse [animation-delay:2s]" />
@@ -37,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative z-10">
+          <div className="relative z-10 overflow-x-hidden w-full">
             <Navbar />
             {children}
           </div>

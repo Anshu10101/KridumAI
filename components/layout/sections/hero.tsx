@@ -34,10 +34,7 @@ export const HeroSection = () => {
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   
   return (
-    <section className="relative overflow-hidden min-h-screen bg-background" ref={containerRef}>
-      {/* Professional Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_40%,transparent_100%)] opacity-[0.1]" />
-
+    <section className="relative overflow-hidden min-h-[90vh] bg-background" ref={containerRef}>
       {/* Background Gradient Effects */}
       <motion.div 
         initial={{ opacity: 0.8 }}
@@ -58,9 +55,9 @@ export const HeroSection = () => {
       />
 
       <div className="container relative z-30">
-        <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[calc(100vh-8rem)] py-20">
+        <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[calc(90vh-4rem)] pt-8 pb-16">
           {/* Left Column - Content */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-5">
             <AnimatedSection delay={0.2}>
               <div className="flex flex-wrap gap-3">
                 <FeatureCard icon={Brain} title="AI-Powered Learning" delay={0.2} />
@@ -70,9 +67,9 @@ export const HeroSection = () => {
             </AnimatedSection>
 
             <AnimatedSection delay={0.3}>
-              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">
                 Transform Learning with{" "}
-                <div className="inline-block mt-6">
+                <div className="inline-block">
                   <Icons.kridumLogo size="3xl" className="text-foreground dark:text-white" />
                 </div>
               </h1>
@@ -85,7 +82,7 @@ export const HeroSection = () => {
             </AnimatedSection>
 
             <AnimatedSection delay={0.5}>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 mt-2">
                 <Button asChild size="lg" className="group">
                   <Link href="#pricing">
                     Get Started
@@ -117,21 +114,24 @@ export const HeroSection = () => {
                 }}
                 className="relative z-20"
               >
-                <Image
-                  width={1200}
-                  height={1200}
-                  className="w-full rounded-lg relative z-10 border border-muted/20"
-                  src={theme === "light" ? "/hero-image-light.png" : "/hero-image-dark.png"}
-                  alt="KridumAI platform"
-                  priority={true}
-                />
+                <div className="max-w-[600px] mx-auto">
+                  <Image
+                    width={500}
+                    height={250}
+                    className="w-full rounded-lg relative z-10 border-[0.5px] border-muted/20"
+                    src={theme === "light" ? "/hero-image-light.png" : "/hero-image-dark.png"}
+                    alt="KridumAI platform"
+                    priority={true}
+                    quality={100}
+                  />
+                </div>
                 
                 {/* Floating Elements */}
                 <motion.div
                   initial={{ y: 0 }}
                   animate={{ y: [0, -10, 0] }}
                   transition={{ repeat: Infinity, duration: 3 }}
-                  className="absolute -top-8 right-10 bg-card/50 backdrop-blur-lg rounded-lg p-4 border border-border"
+                  className="absolute -top-8 right-10 bg-card/50 backdrop-blur-lg rounded-lg p-4 border border-border z-50"
                 >
                   <div className="flex items-center gap-2">
                     <Brain className="w-5 h-5 text-primary" />
@@ -143,7 +143,7 @@ export const HeroSection = () => {
                   initial={{ y: 0 }}
                   animate={{ y: [0, 10, 0] }}
                   transition={{ repeat: Infinity, duration: 4 }}
-                  className="absolute -bottom-6 left-10 bg-card/50 backdrop-blur-lg rounded-lg p-4 border border-muted"
+                  className="absolute -bottom-6 left-10 bg-card/50 backdrop-blur-lg rounded-lg p-4 border border-muted z-50"
                 >
                   <div className="flex items-center gap-2">
                     <GamepadIcon className="w-5 h-5 text-primary" />

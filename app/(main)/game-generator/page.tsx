@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 
 export default function GameGeneratorPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] py-12 px-4">
+    <div className="flex flex-col items-center justify-center min-h-[80vh] pt-24 pb-12 px-4">
       <h1 className="text-4xl font-bold mb-8 text-center">Game Generator</h1>
       <div className="w-full max-w-xl bg-card rounded-2xl shadow-xl px-8 py-10 border border-border">
         <Tabs defaultValue="concept" className="w-full">

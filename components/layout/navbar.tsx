@@ -22,6 +22,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ThemeToggle } from "./theme-toggle";
 import { Icons } from "../icons";
+import { cn } from "@/lib/utils";
 
 interface RouteProps {
   href: string;
@@ -83,11 +84,13 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? "bg-background/70 backdrop-blur-xl shadow-lg" 
-        : "bg-background/40 backdrop-blur-sm"
-    }`}>
+    <header
+      className={cn(
+        "sticky top-0 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        isScrolled ? "shadow-sm" : "",
+        "z-40"
+      )}
+    >
       <div className="container mx-auto flex justify-between items-center p-4">
         <Link 
           href="/" 
