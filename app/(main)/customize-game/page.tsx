@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { ArrowRight, RefreshCw, Upload, Copy, ScanText } from "lucide-react";
+import Image from "next/image";
 
 export default function CustomizeGamePage() {
   return (
@@ -12,11 +13,18 @@ export default function CustomizeGamePage() {
       <div className="w-full max-w-3xl bg-muted/60 rounded-2xl shadow-xl p-8 md:p-12 border border-border">
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-1">Hero Character</h2>
-          <p className="text-muted-foreground mb-6">Create your game's main character</p>
+          <p className="text-muted-foreground mb-6">Create your game&apos;s main character</p>
           <div className="flex flex-col items-center justify-center">
             {/* Image Placeholder */}
             <div className="w-48 h-48 bg-muted rounded-xl flex items-center justify-center mb-8">
-              <img src="https://placehold.co/160x80/cccccc/222222?text=%20" alt="Hero Character" className="object-contain w-32 h-32 opacity-80" />
+              <Image 
+                src="https://placehold.co/160x80/cccccc/222222?text=%20"
+                alt="Hero Character"
+                width={160}
+                height={80}
+                unoptimized
+                className="object-contain w-32 h-32 opacity-80"
+              />
             </div>
             <div className="flex gap-4 mb-6 w-full max-w-md">
               <Button variant="secondary" size="lg" className="flex-1" disabled>
