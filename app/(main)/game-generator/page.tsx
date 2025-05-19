@@ -1,67 +1,173 @@
+"use client";
+
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useState, useEffect } from "react";
 
 export default function GameGeneratorPage() {
+  const [activeTab, setActiveTab] = useState("concept");
+  const [isMounted, setIsMounted] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    const checkMobile = () => window.innerWidth < 640; // Tailwind's default 'sm' breakpoint
+    setIsMobileView(checkMobile());
+
+    const handleResize = () => setIsMobileView(checkMobile());
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, type: string) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+    
+    // TODO: Handle the form submission based on type
+    console.log(`Generating ${type}:`, data);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] pt-24 pb-12 px-4">
-      <h1 className="text-4xl font-bold mb-8 text-center">Game Generator</h1>
-      <div className="w-full max-w-xl bg-card rounded-2xl shadow-xl px-8 py-10 border border-border">
-        <Tabs defaultValue="concept" className="w-full">
-          <TabsList className="w-full flex justify-between mb-8 gap-2">
-            <TabsTrigger value="concept" className="flex-1">Generate Concept</TabsTrigger>
-            <TabsTrigger value="style" className="flex-1">Generate Game Style</TabsTrigger>
-            <TabsTrigger value="asset" className="flex-1">Generate Single Asset</TabsTrigger>
-          </TabsList>
-          <TabsContent value="concept">
-            <form className="space-y-8">
-              <div className="space-y-2">
-                <Label htmlFor="topic" className="mb-1 block">Topic</Label>
-                <Input id="topic" placeholder="Enter your game topic here..." />
+    <main className="min-h-screen w-full bg-background px-4 py-6 sm:py-12">
+      <div className="w-full max-w-lg mx-auto">
+        <h1 className="text-2xl sm:text-4xl font-bold mb-6 text-center">Game Generator</h1>
+        
+        <div className="bg-card/80 rounded-xl shadow-lg border border-border/50">
+          {isMounted ? (
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              {/* TabsList */}
+              {isMobileView ? (
+                /* Mobile View */
+                <TabsList className="w-full flex flex-col sm:hidden">
+                  <TabsTrigger 
+                    value="concept" 
+                    className="w-full rounded-none border-b border-border/50 py-3 px-4"
+                  >
+                    Generate Concept
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="style" 
+                    className="w-full rounded-none border-b border-border/50 py-3 px-4"
+                  >
+                    Generate Style
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="asset" 
+                    className="w-full rounded-none border-b border-border/50 py-3 px-4"
+                  >
+                    Generate Asset
+                  </TabsTrigger>
+                </TabsList>
+              ) : (
+                /* Desktop View */
+                <TabsList className="w-full hidden sm:flex justify-between gap-2 p-2">
+                  <TabsTrigger value="concept">Generate Concept</TabsTrigger>
+                  <TabsTrigger value="style">Generate Style</TabsTrigger>
+                  <TabsTrigger value="asset">Generate Asset</TabsTrigger>
+                </TabsList>
+              )}
+
+              {/* Form Content */}
+              <div className="p-4">
+                <TabsContent value="concept" className="mt-0">
+                  <form onSubmit={(e) => handleSubmit(e, "concept")} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="concept-topic" className="text-sm font-medium">Topic</Label>
+                      <Input 
+                        id="concept-topic"
+                        name="topic"
+                        placeholder="Enter your game topic here..." 
+                        className="w-full bg-background/50"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="concept-description" className="text-sm font-medium">Description</Label>
+                      <Textarea 
+                        id="concept-description"
+                        name="description"
+                        placeholder="Describe your game idea in detail..." 
+                        className="w-full min-h-[100px] bg-background/50"
+                        required
+                      />
+                    </div>
+                    <Button type="submit" className="w-full bg-white text-black" variant="outline" size="lg">
+                      Generate Concept
+                    </Button>
+                  </form>
+                </TabsContent>
+
+                <TabsContent value="style" className="mt-0">
+                  <form onSubmit={(e) => handleSubmit(e, "style")} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="style-name" className="text-sm font-medium">Style Name</Label>
+                      <Input 
+                        id="style-name"
+                        name="styleName"
+                        placeholder="Enter the game style name..." 
+                        className="w-full bg-background/50"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="style-description" className="text-sm font-medium">Style Description</Label>
+                      <Textarea 
+                        id="style-description"
+                        name="styleDescription"
+                        placeholder="Describe the style in detail..." 
+                        className="w-full min-h-[100px] bg-background/50"
+                        required
+                      />
+                    </div>
+                    <Button type="submit" className="w-full bg-white text-black" variant="outline" size="lg">
+                      Generate Style
+                    </Button>
+                  </form>
+                </TabsContent>
+
+                <TabsContent value="asset" className="mt-0">
+                  <form onSubmit={(e) => handleSubmit(e, "asset")} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="asset-name" className="text-sm font-medium">Asset Name</Label>
+                      <Input 
+                        id="asset-name"
+                        name="assetName"
+                        placeholder="Enter the asset name..." 
+                        className="w-full bg-background/50"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="asset-description" className="text-sm font-medium">Asset Description</Label>
+                      <Textarea 
+                        id="asset-description"
+                        name="assetDescription"
+                        placeholder="Describe the asset in detail..." 
+                        className="w-full min-h-[100px] bg-background/50"
+                        required
+                      />
+                    </div>
+                    <Button type="submit" className="w-full bg-white text-black" variant="outline" size="lg">
+                      Generate Asset
+                    </Button>
+                  </form>
+                </TabsContent>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="description" className="mb-1 block">Description</Label>
-                <Textarea id="description" placeholder="Describe your game idea in detail..." />
-              </div>
-              <div className="pt-2">
-                <Button type="submit" className="w-full" variant="default" size="lg">Generate Concept</Button>
-              </div>
-            </form>
-          </TabsContent>
-          <TabsContent value="style">
-            <form className="space-y-8">
-              <div className="space-y-2">
-                <Label htmlFor="style-name" className="mb-1 block">Style Name</Label>
-                <Input id="style-name" placeholder="Enter the game style name..." />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="style-description" className="mb-1 block">Style Description</Label>
-                <Textarea id="style-description" placeholder="Describe the style in detail..." />
-              </div>
-              <div className="pt-2">
-                <Button type="submit" className="w-full" variant="default" size="lg">Generate Game Style</Button>
-              </div>
-            </form>
-          </TabsContent>
-          <TabsContent value="asset">
-            <form className="space-y-8">
-              <div className="space-y-2">
-                <Label htmlFor="asset-name" className="mb-1 block">Asset Name</Label>
-                <Input id="asset-name" placeholder="Enter the asset name..." />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="asset-description" className="mb-1 block">Asset Description</Label>
-                <Textarea id="asset-description" placeholder="Describe the asset in detail..." />
-              </div>
-              <div className="pt-2">
-                <Button type="submit" className="w-full" variant="default" size="lg">Generate Asset</Button>
-              </div>
-            </form>
-          </TabsContent>
-        </Tabs>
+            </Tabs>
+          ) : (
+            // Optional: Add a loading spinner or placeholder here
+            <div className="p-4 text-center text-muted-foreground">Loading generator...</div>
+          )}
+        </div>
       </div>
-    </div>
+    </main>
   );
 } 

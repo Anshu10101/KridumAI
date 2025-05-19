@@ -48,7 +48,7 @@ const serviceList: ServiceProps[] = [
 
 export const ServicesSection = () => {
   return (
-    <section id="services" className="container py-24 sm:py-32 relative overflow-hidden">
+    <section id="services" className="container py-24 sm:py-32">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.2 }}

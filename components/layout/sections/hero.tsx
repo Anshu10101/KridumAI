@@ -18,7 +18,7 @@ const FeatureCard = ({ icon: Icon, title, delay }: { icon: any, title: string, d
     className="flex items-center gap-2 bg-secondary/50 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-foreground"
   >
     <Icon className="w-4 h-4 text-primary" />
-    <span>{title}</span>
+    <span className="text-foreground">{title}</span>
   </motion.div>
 );
 
@@ -34,7 +34,7 @@ export const HeroSection = () => {
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   
   return (
-    <section className="relative overflow-hidden min-h-[90vh] bg-background" ref={containerRef}>
+    <section className="relative overflow-hidden bg-background" ref={containerRef}>
       {/* Background Gradient Effects */}
       <motion.div 
         initial={{ opacity: 0.8 }}
@@ -55,13 +55,13 @@ export const HeroSection = () => {
       />
 
       <div className="container relative z-30">
-        <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[calc(90vh-4rem)] pt-8 pb-16">
+        <div className="grid lg:grid-cols-2 gap-8 pt-16 pb-16">
           {/* Left Column - Content */}
           <div className="flex flex-col gap-5">
             <AnimatedSection delay={0.2}>
               <div className="flex flex-wrap gap-3">
                 <FeatureCard icon={Brain} title="AI-Powered Learning" delay={0.2} />
-                <FeatureCard icon={Icons.kridumLogo} title="Game-Based Education" delay={0.4} />
+                <FeatureCard icon={GamepadIcon} title="Game-Based Education" delay={0.4} />
                 <FeatureCard icon={Bot} title="Adaptive Teaching" delay={0.6} />
               </div>
             </AnimatedSection>
@@ -70,7 +70,7 @@ export const HeroSection = () => {
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">
                 Transform Learning with{" "}
                 <div className="inline-block">
-                  <Icons.kridumLogo size="3xl" className="text-foreground dark:text-white" />
+                  <Icons.kridumLogo size="3xl" className="text-gray-900 dark:text-white" />
                 </div>
               </h1>
             </AnimatedSection>
@@ -147,7 +147,7 @@ export const HeroSection = () => {
                 >
                   <div className="flex items-center gap-2">
                     <GamepadIcon className="w-5 h-5 text-primary" />
-                    <span className="text-sm font-medium">Interactive Games</span>
+                    <span className="text-sm font-medium text-foreground">Interactive Games</span>
                   </div>
                 </motion.div>
               </motion.div>

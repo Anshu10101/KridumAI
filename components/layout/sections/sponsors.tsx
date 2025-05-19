@@ -58,13 +58,13 @@ export const SponsorsSection = () => {
           {sponsors.map(({ icon, name }) => (
             <div
               key={name}
-              className="flex items-center text-xl md:text-2xl font-medium"
+              className="flex items-center text-xl md:text-2xl font-medium text-foreground"
             >
               <Icon
                 name={icon as keyof typeof icons}
                 size={32}
-                color="white"
-                className="mr-2"
+                color="currentColor"
+                className="mr-2 text-foreground"
               />
               {name}
             </div>

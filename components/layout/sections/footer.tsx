@@ -72,7 +72,7 @@ export const FooterSection = ({ className }: FooterProps) => {
   const scale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
 
   return (
-    <footer className="container py-8 relative overflow-hidden" ref={containerRef}>
+    <footer className="container py-8" ref={containerRef}>
       {/* Background Elements */}
       <motion.div
         style={{ opacity }}
@@ -92,9 +92,7 @@ export const FooterSection = ({ className }: FooterProps) => {
           <AnimatedSection delay={0.2}>
             <div>
               <Link href="/" className="text-2xl font-bold">
-                <span className="text-white">
-                  Kridum<span className="text-neutral-400">AI</span>
-                </span>
+                <Icons.kridumLogo size="2xl" className="text-foreground" />
               </Link>
             </div>
           </AnimatedSection>

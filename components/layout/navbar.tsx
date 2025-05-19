@@ -20,7 +20,7 @@ import {
 import { Button } from "../ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeToggle, MobileThemeToggle } from "./theme-toggle";
 import { Icons } from "../icons";
 import { cn } from "@/lib/utils";
 
@@ -32,16 +32,13 @@ interface RouteProps {
 interface FeatureProps {
   title: string;
   description: string;
+  href: string;
 }
 
 const routeList: RouteProps[] = [
   {
     href: "#testimonials",
     label: "Testimonials",
-  },
-  {
-    href: "#featured-games",
-    label: "Featured Games",
   },
   {
     href: "#contact",
@@ -55,24 +52,31 @@ const routeList: RouteProps[] = [
 
 const featureList: FeatureProps[] = [
   {
-    title: "Game-Based Learning",
-    description: "Transform education through interactive gaming experiences.",
+    title: "Game Generator",
+    description: "Create your own educational games easily.",
+    href: "/game-generator"
   },
   {
-    title: "AI-Powered Education",
-    description:
-      "Leverage artificial intelligence to create personalized learning paths.",
+    title: "Customize Games",
+    description: "Tailor existing games to fit your curriculum.",
+    href: "/customize-game"
   },
   {
-    title: "Educator Tools",
-    description:
-      "Comprehensive tools for teachers to design and monitor educational games.",
+    title: "Interactive Lessons",
+    description: "Engage with structured, game-like lessons.",
+    href: "/lesson/1"
+  },
+  {
+    title: "Content Creator",
+    description: "Build new educational content and activities.",
+    href: "/create"
   },
 ];
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [gamesDropdownOpen, setGamesDropdownOpen] = React.useState(false);
 
   // Add scroll event listener
   React.useEffect(() => {
@@ -83,12 +87,24 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Handle keyboard navigation for dropdown
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setGamesDropdownOpen(false);
+    };
+    if (gamesDropdownOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gamesDropdownOpen]);
+
   return (
     <header
       className={cn(
-        "sticky top-0 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
-        isScrolled ? "shadow-sm" : "",
-        "z-40"
+        "sticky top-0 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50",
+        isScrolled ? "shadow-sm" : ""
       )}
     >
       <div className="container mx-auto flex justify-between items-center p-4">
@@ -117,8 +133,8 @@ export const Navbar = () => {
               </Button>
             </SheetTrigger>
             <SheetContent 
-              side="left" 
-              className="bg-background/95 backdrop-blur-xl border-r border-border/50"
+              side="right" 
+              className="bg-background/95 backdrop-blur-xl border-l border-border/50"
             >
               <div className="h-full flex flex-col">
                 <SheetHeader className="p-4 border-b border-border/50">
@@ -152,14 +168,14 @@ export const Navbar = () => {
                 </nav>
                 <div className="mt-auto p-4 border-t border-border/50 bg-muted/50">
                   <div className="flex items-center justify-between">
-                    <ThemeToggle />
+                    <MobileThemeToggle />
                     <Button
                       asChild
                       variant="ghost"
                       size="icon"
                       className="hover:bg-primary/10 transition-colors"
                     >
-                      <Link href="/(auth)/login">
+                      <Link href="/login">
                         <User className="h-5 w-5" />
                       </Link>
                     </Button>
@@ -171,69 +187,58 @@ export const Navbar = () => {
         </div>
 
         {/* Desktop */}
-        <div className="hidden lg:block">
-          <NavigationMenu>
-            <NavigationMenuList className="relative">
-              <NavigationMenuItem>
-                <NavigationMenuTrigger 
-                  className="bg-transparent text-lg py-2 hover:bg-primary/10 hover:text-foreground data-[state=open]:bg-primary/10 data-[state=open]:text-foreground transition-all duration-300"
-                >
-                  Features
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute top-full">
-                  <div className="grid w-[600px] grid-cols-2 gap-5 p-4 bg-background/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-lg">
-                    <div className="flex items-center justify-center bg-card/50 p-8 rounded-lg border border-border/50 backdrop-blur-xl">
-                      <div className="text-center group/logo relative">
-                        <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-xl blur opacity-0 group-hover/logo:opacity-100 transition duration-500" />
-                        <div className="relative">
-                          <div className="flex items-center justify-center bg-primary/20 rounded-lg p-3 mx-auto mb-4 shadow-lg w-16 h-16 relative overflow-hidden group-hover/logo:bg-primary/30 transition-colors">
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-secondary/40 to-primary/40 opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500" />
-                            <Icons.kridumLogo className="w-10 h-10 text-primary-foreground relative z-10" />
-                          </div>
-                          <span className="text-3xl font-extrabold flex items-center justify-center">
-                            <span className="text-foreground">Kridum</span>
-                            <span className="text-primary dark:text-neutral-400">AI</span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <ul className="grid gap-3">
-                      {featureList.map(({ title, description }) => (
-                        <li
-                          key={title}
-                          className="rounded-lg p-3 text-sm hover:bg-primary/10 transition-all duration-300 group relative"
-                        >
-                          <div className="absolute -inset-1 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-500" />
-                          <div className="relative">
-                            <p className="mb-1 font-semibold leading-none text-foreground group-hover:text-primary transition-colors">
-                              {title}
-                            </p>
-                            <p className="line-clamp-2 text-muted-foreground">
-                              {description}
-                            </p>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
+        <div className="hidden lg:flex items-center gap-8">
+          {/* Custom Featured Games Dropdown */}
+          <div className="relative">
+            <button
+              className="flex items-center gap-2 px-4 py-2 rounded-md text-lg font-semibold bg-transparent hover:bg-primary/10 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+              onClick={() => setGamesDropdownOpen((open) => !open)}
+              onBlur={(e) => {
+                // Only close if focus moves outside dropdown
+                if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                  setGamesDropdownOpen(false);
+                }
+              }}
+              aria-haspopup="true"
+              aria-expanded={gamesDropdownOpen}
+            >
+              Featured Games
+              <svg className={`w-4 h-4 transition-transform ${gamesDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            {gamesDropdownOpen && (
+              <div
+                className="absolute left-0 mt-2 w-80 bg-background border border-border rounded-xl shadow-xl z-50 animate-fade-in"
+                tabIndex={-1}
+                onMouseLeave={() => setGamesDropdownOpen(false)}
+              >
+                <ul className="divide-y divide-border">
+                  {featureList.map(({ title, description, href }) => (
+                    <li key={title}>
+                      <Link
+                        href={href}
+                        className="block px-5 py-4 hover:bg-primary/10 transition-colors rounded-xl focus:bg-primary/20 focus:outline-none"
+                        tabIndex={0}
+                      >
+                        <div className="font-bold text-base text-foreground mb-1">{title}</div>
+                        <div className="text-muted-foreground text-sm">{description}</div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
 
-              {routeList.map(({ href, label }) => (
-                <NavigationMenuItem key={href}>
-                  <NavigationMenuLink
-                    asChild
-                    className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-lg font-medium transition-all duration-300 hover:bg-primary/10 hover:text-primary relative"
-                  >
-                    <Link href={href}>
-                      <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-500" />
-                      <span className="relative">{label}</span>
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+          {/* Other nav links */}
+          {routeList.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-lg font-medium transition-all duration-300 hover:bg-primary/10 hover:text-primary relative"
+            >
+              <span className="relative">{label}</span>
+            </Link>
+          ))}
         </div>
 
         <div className="hidden lg:flex items-center gap-4">
@@ -244,7 +249,7 @@ export const Navbar = () => {
             size="icon"
             className="relative group"
           >
-            <Link href="/(auth)/login">
+            <Link href="/login">
               <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-500" />
               <User className="h-5 w-5 relative" />
             </Link>
