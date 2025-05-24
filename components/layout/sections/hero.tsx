@@ -34,7 +34,7 @@ export const HeroSection = () => {
   const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   
   return (
-    <section className="relative overflow-hidden bg-background" ref={containerRef}>
+    <section className="relative overflow-hidden bg-background pt-24" ref={containerRef}>
       {/* Background Gradient Effects */}
       <motion.div 
         initial={{ opacity: 0.8 }}
@@ -55,7 +55,7 @@ export const HeroSection = () => {
       />
 
       <div className="container relative z-30">
-        <div className="grid lg:grid-cols-2 gap-8 pt-16 pb-16">
+        <div className="grid lg:grid-cols-2 gap-8 py-16">
           {/* Left Column - Content */}
           <div className="flex flex-col gap-5">
             <AnimatedSection delay={0.2}>

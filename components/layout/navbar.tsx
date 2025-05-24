@@ -103,8 +103,8 @@ export const Navbar = () => {
   return (
     <header
       className={cn(
-        "sticky top-0 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50",
-        isScrolled ? "shadow-sm" : ""
+        "fixed top-0 left-0 right-0 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 transition-shadow duration-200",
+        isScrolled ? "shadow-md" : ""
       )}
     >
       <div className="container mx-auto flex justify-between items-center p-4">

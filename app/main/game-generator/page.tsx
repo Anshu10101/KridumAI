@@ -5,17 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 
 export default function GameGeneratorPage() {
   const [activeTab, setActiveTab] = useState("concept");
   const [isMounted, setIsMounted] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
 
-    const checkMobile = () => window.innerWidth < 640; // Tailwind's default 'sm' breakpoint
+    const checkMobile = () => window.innerWidth < 768; // Changed to md breakpoint for better mobile experience
     setIsMobileView(checkMobile());
 
     const handleResize = () => setIsMobileView(checkMobile());
@@ -36,47 +38,47 @@ export default function GameGeneratorPage() {
   };
 
   return (
-    <main className="min-h-screen w-full bg-background px-4 py-6 sm:py-12">
-      <div className="w-full max-w-lg mx-auto">
-        <h1 className="text-2xl sm:text-4xl font-bold mb-6 text-center">Game Generator</h1>
+    <main className="min-h-screen w-full bg-background px-4 py-6 sm:py-12 pt-24 sm:pt-32">
+      <div className="w-full max-w-xl mx-auto">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-center">Game Generator</h1>
         
-        <div className="bg-card/80 rounded-xl shadow-lg border border-border/50">
+        <div className="bg-card/80 rounded-xl shadow-lg border border-border/50 overflow-hidden">
           {isMounted ? (
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               {/* TabsList */}
               {isMobileView ? (
                 /* Mobile View */
-                <TabsList className="w-full flex flex-col sm:hidden">
+                <TabsList className="w-full flex flex-row md:hidden">
                   <TabsTrigger 
                     value="concept" 
-                    className="w-full rounded-none border-b border-border/50 py-3 px-4"
+                    className="flex-1 rounded-none border-r border-border/50 py-3 text-xs sm:text-sm"
                   >
-                    Generate Concept
+                    Concept
                   </TabsTrigger>
                   <TabsTrigger 
                     value="style" 
-                    className="w-full rounded-none border-b border-border/50 py-3 px-4"
+                    className="flex-1 rounded-none border-r border-border/50 py-3 text-xs sm:text-sm"
                   >
-                    Generate Style
+                    Style
                   </TabsTrigger>
                   <TabsTrigger 
                     value="asset" 
-                    className="w-full rounded-none border-b border-border/50 py-3 px-4"
+                    className="flex-1 rounded-none py-3 text-xs sm:text-sm"
                   >
-                    Generate Asset
+                    Asset
                   </TabsTrigger>
                 </TabsList>
               ) : (
                 /* Desktop View */
-                <TabsList className="w-full hidden sm:flex justify-between gap-2 p-2">
-                  <TabsTrigger value="concept">Generate Concept</TabsTrigger>
-                  <TabsTrigger value="style">Generate Style</TabsTrigger>
-                  <TabsTrigger value="asset">Generate Asset</TabsTrigger>
+                <TabsList className="hidden md:flex justify-between gap-2 p-2 w-full">
+                  <TabsTrigger value="concept" className="flex-1">Generate Concept</TabsTrigger>
+                  <TabsTrigger value="style" className="flex-1">Generate Style</TabsTrigger>
+                  <TabsTrigger value="asset" className="flex-1">Generate Asset</TabsTrigger>
                 </TabsList>
               )}
 
               {/* Form Content */}
-              <div className="p-4">
+              <div className="p-4 sm:p-6">
                 <TabsContent value="concept" className="mt-0">
                   <form onSubmit={(e) => handleSubmit(e, "concept")} className="space-y-4">
                     <div className="space-y-2">
@@ -95,11 +97,16 @@ export default function GameGeneratorPage() {
                         id="concept-description"
                         name="description"
                         placeholder="Describe your game idea in detail..." 
-                        className="w-full min-h-[100px] bg-background/50"
+                        className="w-full min-h-[120px] bg-background/50"
                         required
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-white text-black" variant="outline" size="lg">
+                    <Button 
+                      type="submit" 
+                      className={`w-full ${theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-primary text-primary-foreground hover:bg-primary/90'}`} 
+                      variant={theme === 'dark' ? 'outline' : 'default'} 
+                      size="lg"
+                    >
                       Generate Concept
                     </Button>
                   </form>
@@ -123,11 +130,16 @@ export default function GameGeneratorPage() {
                         id="style-description"
                         name="styleDescription"
                         placeholder="Describe the style in detail..." 
-                        className="w-full min-h-[100px] bg-background/50"
+                        className="w-full min-h-[120px] bg-background/50"
                         required
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-white text-black" variant="outline" size="lg">
+                    <Button 
+                      type="submit" 
+                      className={`w-full ${theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-primary text-primary-foreground hover:bg-primary/90'}`} 
+                      variant={theme === 'dark' ? 'outline' : 'default'} 
+                      size="lg"
+                    >
                       Generate Style
                     </Button>
                   </form>
@@ -151,11 +163,16 @@ export default function GameGeneratorPage() {
                         id="asset-description"
                         name="assetDescription"
                         placeholder="Describe the asset in detail..." 
-                        className="w-full min-h-[100px] bg-background/50"
+                        className="w-full min-h-[120px] bg-background/50"
                         required
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-white text-black" variant="outline" size="lg">
+                    <Button 
+                      type="submit" 
+                      className={`w-full ${theme === 'dark' ? 'bg-white text-black hover:bg-gray-200' : 'bg-primary text-primary-foreground hover:bg-primary/90'}`} 
+                      variant={theme === 'dark' ? 'outline' : 'default'} 
+                      size="lg"
+                    >
                       Generate Asset
                     </Button>
                   </form>
@@ -163,11 +180,16 @@ export default function GameGeneratorPage() {
               </div>
             </Tabs>
           ) : (
-            // Optional: Add a loading spinner or placeholder here
-            <div className="p-4 text-center text-muted-foreground">Loading generator...</div>
+            // Loading state
+            <div className="p-8 text-center text-muted-foreground">
+              <div className="animate-pulse flex flex-col items-center">
+                <div className="h-4 w-20 bg-muted rounded mb-4"></div>
+                <div className="h-32 w-full bg-muted rounded"></div>
+              </div>
+            </div>
           )}
         </div>
       </div>
     </main>
   );
-} 
+}

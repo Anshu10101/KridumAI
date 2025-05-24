@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function CustomizeGamePage() {
   return (
-    <div className="min-h-[100vh] bg-background flex flex-col items-center py-12 px-2">
+    <div className="min-h-[100vh] bg-background flex flex-col items-center py-12 px-2 mt-20">
       <h1 className="text-5xl font-extrabold text-center mb-2 tracking-tight">Customize Your Game</h1>
       <p className="text-lg text-muted-foreground text-center mb-10">Generate unique images for your game elements</p>
       <div className="w-full max-w-3xl bg-muted/60 rounded-2xl shadow-xl p-8 md:p-12 border border-border">

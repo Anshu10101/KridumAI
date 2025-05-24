@@ -12,7 +12,7 @@ export default function CreateGame() {
   };
 
   return (
-    <div className="container mx-auto py-10 min-h-screen">
+    <div className="container mx-auto py-10 min-h-screen mt-20">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Left side - Game Type Cards */}
         <div className="space-y-6">
